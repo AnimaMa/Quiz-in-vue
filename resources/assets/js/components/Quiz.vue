@@ -1,17 +1,25 @@
 <template>
     <div class="container">
         <div>
-            <button @click="start">START!</button>
-            <!--<li v-for="question in questions">-->
+            <a href="#" @click.stop.prevent="start" class="startButton">START☻</a>
+            <br>
             <div class="questions" v-if="startQuiz">
-                <question>
-                    <!--:question="questions[currentQuestion]"-->
-                    <!--v-on:answer="handleAnswer"-->
-                    <!--:question-number="currentQuestion+1"-->
-                </question>
-            </div>
-            <!--</li>-->
+               <h1 class="h2 tac"> {{titleQuiz}}</h1>
+                <div class="question">
+                    <question v-for="question in questions"
+                              :question="question.text"
+                        v-on:answer="question.answer"
+                    :type="question.type">
+                        <!--:question-number="currentQuestion+1"-->
+                    <!--&gt;-->
+                    </question>
+                </div>
 
+                {{this.que}}
+            </div>
+            <div v-if="this.questions" >
+                {{ this.questions}}
+            </div>
         </div>
 
 
@@ -28,17 +36,22 @@
         },
         data() {
             return {
-                jsonUrl: 'https://api.myjson.com/bins/t0zvc',
+                jsonUrl: 'https://api.myjson.com/bins/by3ao',
                 startQuiz: false,
 
+                titleQuiz: '',
+
                 questionText: '',
-                questionAnswer:'',
-                questionOptions: ''
+                questionAnswers: [],
+                questionOptions: '',
+                questions: [],
+                que:'',
+                type: ''
             }
         },
 
         methods: {
-            start(){
+            start() {
                 console.log('staarting');
                 console.log(this.jsonUrl);
                 console.log('SME V GET');
@@ -46,22 +59,26 @@
                     .then((response) => {
                         console.log(response.data);
                         this.startQuiz = true;
-                        this.questionText = response.data.questions.text;
 
-                        //
-                        // this.error = false;
-                        // this.data = response.data;
-                        // this.setProperties();
+                        this.titleQuiz = response.data.title;
+                        this.questions = response.data.questions;
+
+                        questions.forEach( que => {
+                            console.log(que.text);
+                            this.type.push(que.type);
+                            // this.questions.push(que);
+                            // console.log(this.questions);
+
+                            // this.questionAnswers.push(this.question.text);
+                            // console.log(this.questionAnswers);
+                            // this.que = que.text;
+                            // console.log(que.answer);
+                            // console.log(que.text);
+                        });
+
                     })
                     .catch((error) => {
                         console.log(error);
-                        // this.loading = false;
-                        // this.errorLoad = true;
-                        //
-                        // if (error.response.data.detail) {
-                        //     this.errorDetail = error.response.data.detail;
-                        //     this.errorHandle(this.errorDetail);
-                        // }
 
                     });
             }

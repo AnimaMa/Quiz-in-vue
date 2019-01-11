@@ -22,9 +22,7 @@
       <router-link to="/home">Home</router-link> |
       <router-link to="/quiz">Quiz</router-link>
   </header>
-    |
     {{--<router-link to="/searching">Searching</router-link>--}}
-
     <router-view></router-view>
 
 </div>

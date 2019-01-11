@@ -11,7 +11,7 @@ window.Vue = Vue;
 window.axios = axios;
 Vue.config.debug = true;
 Vue.use(VueRouter);
-const JsonUrl = 'https://api.myjson.com/bins/t0zvc';
+const JsonUrl = 'https://api.myjson.com/bins/by3ao';
 const routes = [
     {path: '/home', component: Home},
     {path: '/quiz', component: Quiz}
