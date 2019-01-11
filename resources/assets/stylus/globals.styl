@@ -1,0 +1,131 @@
+body
+    color $violet
+    font-size 16px
+    font-family: 'Montserrat'
+
+
+.order-site
+    background-color: $violet
+
+a
+    text-decoration none
+
+img
+    max-width 100%
+
+
+.wrap
+    margin 0 auto
+    max-width 1300px
+    padding 0 10px
+.medium-wrap
+    margin 0 auto
+    max-width 1000px
+    padding 0 10px
+
+
+.narrow-wrap
+    margin 0 auto
+    max-width 800px
+    padding 0 10px
+
+section
+    padding 50px 0
+
+p
+    line-height 28px
+    font-weight 300
+    font-size 19px
+
+
+
+
+
+strong
+    font-weight: bold
+
+.dark
+    color white
+
+.light
+    color $violet
+
+.h1
+    font1()
+    color $yellow
+    font-size 38px
+    margin 15px 0
+    line-height 38px
+    letter-spacing 6.5px
+
+.h2
+    font1()
+    color $pink
+    font-size 20px
+    margin 15px 0
+    line-height 25px
+    letter-spacing 3px
+
+
+
+.h3
+    font2()
+    color white
+    font-size 17px
+    margin 15px 0
+    line-height 17px
+    letter-spacing 10.5px
+
+
+
+.textbox
+    text-align left
+
+.split
+    display flex
+
+    & > *
+        flex 0 0 50%
+
+.highlight-text //text v nadpise 100% arabika
+        height 72px
+        background-image: url(../img/lines.svg)
+        background-repeat no-repeat
+        background-position center
+        background-size contain
+        font2()
+        font-size 30px
+        margin 50px 0 35px 0
+        display flex
+        justify-content center
+        align-items center
+
+@media (max-width: 635px)
+    .highlight-text
+        font-size 28px
+        height 70px
+    .h1
+        font-size 25px
+        line-height 25px
+        letter-spacing 4px
+    section
+        padding:20px 0
+
+@media (max-width: 525px)
+    .highlight-text
+        font-size 23px
+        height 65px
+
+@media (max-width: 445px)
+    .highlight-text
+        font-size 18px
+        height 60px
+
+    p
+        font-size 16px
+
+@media (max-width: 350px)
+    .highlight-text
+        font-size 15px
+        height 57px
+
