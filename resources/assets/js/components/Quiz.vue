@@ -4,24 +4,29 @@
             <a href="#" @click.stop.prevent="start" class="startButton">START☻</a>
             <br>
             <div class="questions" v-if="startQuiz">
-               <h1 class="h2 tac"> {{titleQuiz}}</h1>
+                <h1 class="h2 tac"> {{titleQuiz}}D</h1>
                 <div class="question">
-                    <question v-for="question in questions"
+
+                    <question v-for="(question, index) in questions"
                               :question="question.text"
-                        v-on:answer="question.answer"
-                    :type="question.type">
-                        <!--:question-number="currentQuestion+1"-->
-                    <!--&gt;-->
+                              v-on:answer="question.answer"
+                              :answers="question.answers"
+                              :type="question.type"
+                              :question-number="index+1">
+
                     </question>
+
                 </div>
 
-                {{this.que}}
+                <button @click="submitAnswers"> Submit Answers</button>
+
             </div>
-            <div v-if="this.questions" >
+
+            <div v-if="this.questions">
                 {{ this.questions}}
             </div>
-        </div>
 
+        </div>
 
     </div>
 </template>
@@ -38,23 +43,29 @@
             return {
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
                 startQuiz: false,
-
                 titleQuiz: '',
-
                 questionText: '',
                 questionAnswers: [],
                 questionOptions: '',
                 questions: [],
-                que:'',
-                type: ''
+                que: '',
+                type: '',
+                answers: []
+            }
+        },
+
+        computed: {
+            checkAnswers: function() {
+                this.questions.filter( que => {
+                    console.log(que );
+                })
             }
         },
 
         methods: {
             start() {
-                console.log('staarting');
-                console.log(this.jsonUrl);
-                console.log('SME V GET');
+                console.log('START');
+
                 axios.get(this.jsonUrl)
                     .then((response) => {
                         console.log(response.data);
@@ -62,27 +73,23 @@
 
                         this.titleQuiz = response.data.title;
                         this.questions = response.data.questions;
+                        this.type = response.data.questions.type;
 
-                        questions.forEach( que => {
-                            console.log(que.text);
-                            this.type.push(que.type);
-                            // this.questions.push(que);
-                            // console.log(this.questions);
-
-                            // this.questionAnswers.push(this.question.text);
-                            // console.log(this.questionAnswers);
-                            // this.que = que.text;
-                            // console.log(que.answer);
-                            // console.log(que.text);
+                        response.data.questions.filter(que => {
+                            if (que.answers) {
+                                this.answers.push(que.answers);
+                                console.log(this.answers);
+                            }
                         });
-
                     })
                     .catch((error) => {
                         console.log(error);
-
                     });
+            },
+            submitAnswers() {
+                console.log('submit');
+                this.checkAnswers();
             }
-
         },
 
         mounted() {

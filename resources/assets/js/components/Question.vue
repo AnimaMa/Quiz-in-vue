@@ -8,30 +8,30 @@
         <!--</div>-->
         <!--<p v-bind="quiz.que"></p>-->
 
-        <div class="flex">
+        <div class="que">
             <br>
-{{question }}
-            <div v-if="this.type === 'tf'">
-                <input type="radio" name="currentQuestion" id="trueAnswer" v-model="answer" value="t"><label
-                    for="trueAnswer">True</label><br/>
-                <input type="radio" name="currentQuestion" id="falseAnswer" v-model="answer" value="f"><label
-                    for="falseAnswer">False</label><br/>
+            <h2 class="h3">{{questionNumber}}. {{ question }}</h2>
+            <br>
+            <br>
+            <div v-if="type === 'tf'">
 
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t"><label
+                    for="trueAnswer">True</label><br/>
+
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="falseAnswer" v-model="answerData" value="f"><label
+                    for="falseAnswer">False</label><br/>
             </div>
 
-            <div v-if="this.type === 'mc'">
+            <div v-if=" type === 'mc'">
 
-                <div v-for="(mcanswer,index) in question.answers">
-                    {{answer}}
-                    <input type="radio" :id="'answer'+index" name="currentQuestion" v-model="answer"
+                <div v-for="(mcanswer,index) in  answers">
+                    <input type="radio" :id="'answer'+index" :name="'currentQuestion' + questionNumber"
+                           v-model="answerData"
 
                            :value="mcanswer"><label :for="'answer'+index">{{mcanswer}}</label><br/>
-<!--tu som skoncila aaa teraz treba nacitat aj odpovede aj je to mc-->
-
                 </div>
 
             </div>
-
 
         </div>
     </div>
@@ -45,12 +45,14 @@
         components: {},
         name: 'Question',
         props: [
-            'question', 'answer', 'question-number', 'type'
+            'question', 'answer', 'questionNumber', 'type', 'answers'
         ],
 
         data() {
             return {
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
+                answerData: ''
+
             }
         },
 
@@ -66,6 +68,7 @@
 
         created() {
             console.log('question created');
+            this.answerData = this.answer;
         },
 
         methods: {}

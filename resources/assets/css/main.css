@@ -157,7 +157,7 @@ strong {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #ea1d76;
+  color: #3d164e;
   font-size: 20px;
   margin: 15px 0;
   line-height: 25px;
@@ -258,6 +258,14 @@ header {
   display: block;
   margin-top: 50px;
 }
+.question .que {
+  margin: 20px 0;
+  background: #add8e6 top fixed no-repeat;
+  padding: 20px;
+}
+.question .que input {
+  margin-bottom: 15px;
+}
 .questions {
   margin-top: 50px;
   padding: 20px 30px;
@@ -272,7 +280,7 @@ header {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 2px;
-  color: #ea1d76;
+  color: #a88fb9;
   transition: all 0.6s;
 }
 .startButton:hover {
