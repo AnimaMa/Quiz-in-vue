@@ -7,7 +7,7 @@
                 <h1 class="h2 tac"> {{titleQuiz}}D</h1>
                 <div class="question">
 
-                    <question v-for="(question, index) in questions"
+                    <question v-for="(question, index) in questions" v-show="index === questionIndex "
                               :question="question.text"
                               v-on:answer="question.answer"
                               :answers="question.answers"
@@ -15,6 +15,8 @@
                               :question-number="index+1">
 
                     </question>
+                    <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
+                    <button v-on:click="nextQuestion"  :disabled="questionIndex > answers.length">next</button>
 
                 </div>
 
@@ -50,15 +52,18 @@
                 questions: [],
                 que: '',
                 type: '',
-                answers: []
+                answers: [],
+
+                questionIndex: 0
             }
         },
-
+//ak skor potvrdi submit ako vyplni vsetky tak ho upozornit
         computed: {
             checkAnswers: function() {
-                this.questions.filter( que => {
-                    console.log(que );
-                })
+                console.log('check answers');
+                // this.questions.filter( que => {
+                //     console.log(que);
+                // })
             }
         },
 
@@ -86,9 +91,19 @@
                         console.log(error);
                     });
             },
+
+
+            nextQuestion() {
+              this.questionIndex++;
+            },
+
+            prevQuestion(){
+                this.questionIndex--;
+            },
+
             submitAnswers() {
                 console.log('submit');
-                this.checkAnswers();
+               this.checkAnswers();
             }
         },
 
