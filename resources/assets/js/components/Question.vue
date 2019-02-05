@@ -15,11 +15,13 @@
             <br>
             <div v-if="type === 'tf'">
 
-                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t"><label
-                    for="trueAnswer">True</label><br/>
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t">
+                <label for="trueAnswer">True</label>
+                <br/>
 
-                <input type="radio" :name="'currentQuestion' + questionNumber" id="falseAnswer" v-model="answerData" value="f"><label
-                    for="falseAnswer">False</label><br/>
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="falseAnswer" v-model="answerData" value="f">
+                <label for="falseAnswer">False</label>
+                <br/>
             </div>
 
             <div v-if=" type === 'mc'">
@@ -34,11 +36,13 @@
             </div>
 
         </div>
-
     </div>
 
 </template>
 
+
+<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+<!--https://vuejs.org/v2/api/#watch-->
 <script>
     import $ from 'jquery';
 
@@ -46,7 +50,7 @@
         components: {},
         name: 'Question',
         props: [
-            'question', 'answer', 'questionNumber', 'type', 'answers'
+            'question', 'answer', 'questionNumber', 'type', 'answers',
         ],
 
         data() {
@@ -58,6 +62,9 @@
         },
 
         watch: {
+            answerData: function () {
+                console.log('next');
+            }
             // '$route'(to, from) {
             //     this.category = this.$route.params.category;
             //     this.value = this.$route.params.id;
