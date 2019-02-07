@@ -19,14 +19,17 @@
                               v-on:answer="question.answer"
                               :answers="question.answers"
                               :type="question.type"
-                              :question-number="index+1">
+                              :question-number="index+1"
+
+                    >
 
                     </question>
+
+
                     <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
-                    <button v-on:click="nextQuestion" :disabled="questionIndex > answers.length">next</button>
+                    <button v-on:click="nextQuestion">next</button>
 
                 </div>
-
                 <button @click="submitAnswers"> Submit Answers</button>
 
             </div>
@@ -62,8 +65,10 @@
 
                 themes: ['food', 'animals', 'slovakia'],
                 themeModel: '',
+
                 startQuiz: false,
                 titleQuiz: '',
+
                 questionText: '',
                 questionAnswers: [],
                 questionOptions: '',
@@ -74,7 +79,6 @@
                 questionIndex: 0,
 
                 nextQ: '',
-                answerData:''
             }
         },
 //ak skor potvrdi submit ako vyplni vsetky tak ho upozornit
@@ -90,6 +94,7 @@
         },
 
         watch: {
+
             // answerData: function () {
             //     console.log('next');
             // }
@@ -104,7 +109,6 @@
 
 
             },
-
 
             start(jsonUrl) {
                 console.log('START');
@@ -137,11 +141,19 @@
 
             prevQuestion() {
                 this.questionIndex--;
+
             },
 
             submitAnswers() {
-                console.log('submit');
-                this.checkAnswers();
+                this.questions.forEach( que  => {
+                    console.log(que.answer);
+                    console.log('------------------------');
+                    console.log(this.answerData);
+                    // console.log(questionIndex + 1);
+                })
+
+
+
             }
         },
 

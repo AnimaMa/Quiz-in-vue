@@ -15,11 +15,11 @@
             <br>
             <div v-if="type === 'tf'">
 
-                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t">
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t" @change="handleInput"  >
                 <label for="trueAnswer">True</label>
                 <br/>
 
-                <input type="radio" :name="'currentQuestion' + questionNumber" id="falseAnswer" v-model="answerData" value="f">
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="falseAnswer"  v-model="answerData" value="f" @change="handleInput"  >
                 <label for="falseAnswer">False</label>
                 <br/>
             </div>
@@ -27,10 +27,8 @@
             <div v-if=" type === 'mc'">
 
                 <div v-for="(mcanswer,index) in  answers">
-                    <input type="radio" :id="'answer'+index" :name="'currentQuestion' + questionNumber"
-                           v-model="answerData"
-
-                           :value="mcanswer"><label :for="'answer'+index">{{mcanswer}}</label><br/>
+                    <input type="radio" :id="'answer'+index" :name="'currentQuestion' + questionNumber"  v-model="answerData" :value="mcanswer"  @change="handleInput"  >
+                    <label :for="'answer'+index">{{mcanswer}}</label><br/>
                 </div>
 
             </div>
@@ -41,7 +39,6 @@
 </template>
 
 
-<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
 <!--https://vuejs.org/v2/api/#watch-->
 <script>
     import $ from 'jquery';
@@ -50,21 +47,28 @@
         components: {},
         name: 'Question',
         props: [
-            'question', 'answer', 'questionNumber', 'type', 'answers',
+            'question', 'answer', 'questionNumber', 'type', 'answers', 'mcanswer',
         ],
 
         data() {
             return {
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
-                answerData: ''
+                answerData:'',
+                correctAnswers: [],
+                userAnswers: [],
+                arr: []
 
             }
         },
 
         watch: {
-            answerData: function () {
-                console.log('next');
-            }
+            // answerData: function () {
+            //     // console.log(this.answerData + 'a ' + this.questionNumber);
+            //     // console.log(this.userAnswers);
+            //
+            //     this.correctAnswers = question.answer;
+            //     console.log(this.correctAnswers);
+            // }
             // '$route'(to, from) {
             //     this.category = this.$route.params.category;
             //     this.value = this.$route.params.id;
@@ -76,10 +80,21 @@
 
         created() {
             console.log('question created');
-            this.answerData = this.answer;
+            // this.answerData = this.answer;
         },
 
-        methods: {}
+        methods: {
+            handleInput() {
+                console.log(this.answerData);
+                this.userAnswers.push(this.answerData);
+                console.log(this.userAnswers);
+            },
+
+            showResults() {
+                this.$refs.quiz.submitAnswers();
+            }
+
+        }
     }
 
 
