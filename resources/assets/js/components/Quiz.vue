@@ -14,23 +14,20 @@
                 <h1 class="h2 tac"> {{titleQuiz}}</h1>
                 <div class="question">
 
-                    <question v-for="(question, index) in questions" v-show="index === questionIndex "
+                    <question v-for="(question, index) in questions" v-show="index === questionIndex " @addUserAnswerInToArray="addAnswer"
                               :question="question.text"
-                              v-on:answer="question.answer"
+                              :answer="question.answer"
                               :answers="question.answers"
                               :type="question.type"
                               :question-number="index+1"
-
                     >
-
                     </question>
 
-
                     <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
-                    <button v-on:click="nextQuestion">next</button>
+                    <button v-on:click="nextQuestion" >next</button>
 
                 </div>
-                <button @click="submitAnswers"> Submit Answers</button>
+                <button > Submit Answers</button>
 
             </div>
 
@@ -68,17 +65,13 @@
 
                 startQuiz: false,
                 titleQuiz: '',
-
-                questionText: '',
+                // questionText: '',
                 questionAnswers: [],
-                questionOptions: '',
+                // questionOptions: '',
                 questions: [],
-                que: '',
-                type: '',
-                answers: [],
+                // answers: [],
                 questionIndex: 0,
-
-                nextQ: '',
+                userAnswers:[]
             }
         },
 //ak skor potvrdi submit ako vyplni vsetky tak ho upozornit
@@ -90,14 +83,12 @@
                 // this.questions.filter( que => {
                 //     console.log(que);
                 // })
-            }
+            },
+
         },
 
         watch: {
 
-            // answerData: function () {
-            //     console.log('next');
-            // }
         },
 
         methods: {
@@ -123,17 +114,21 @@
                         this.type = response.data.questions.type;
 
                         response.data.questions.filter(que => {
+
                             if (que.answers) {
                                 this.answers.push(que.answers);
+                                // this.answer = que.answer;
                                 console.log(this.answers);
                             }
                         });
+
+
                     })
                     .catch((error) => {
                         console.log(error);
                     });
             },
-
+//musime do this.answer nastavit hodnotu ked sa nacita otazka, nieked kviz
 
             nextQuestion() {
                 this.questionIndex++;
@@ -144,21 +139,47 @@
 
             },
 
-            submitAnswers() {
-                this.questions.forEach( que  => {
-                    console.log(que.answer);
-                    console.log('------------------------');
-                    console.log(this.answerData);
-                    // console.log(questionIndex + 1);
-                })
+            addAnswer(value) {
+
+                console.log('------*-*');
+                console.log(this.answer);
+                this.userAnswers.push(value);
 
 
 
-            }
+                // console.log(this.question.ans);
+                // this.questions.forEach( que => {
+                //
+                //     if(value === this.answer) {
+                //         console.log('yes');
+                //     }
+                //     else {
+                //         console.log('nope');
+                //     }
+                // });
+
+              //   this.userAnswers = value;
+                console.log(this.userAnswers)
+            },
+
+            // showResults(value) {
+            //     console.log( value);
+            //     this.child = value;
+            //     console.log(this);
+            //     this.questions.forEach( que  => {
+            //         console.log(que.answer);
+            //         console.log('------------------------');
+            //
+            //         // console.log(this.answerData);
+            //         // console.log(questionIndex + 1);
+            //     })
+            //
+            // },
+
         },
 
         mounted() {
-            console.log('Component mounted.')
+            console.log('Compon ent mounted.')
         }
     }
 </script>

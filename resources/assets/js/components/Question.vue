@@ -15,7 +15,7 @@
             <br>
             <div v-if="type === 'tf'">
 
-                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer" v-model="answerData" value="t" @change="handleInput"  >
+                <input type="radio" :name="'currentQuestion' + questionNumber" id="trueAnswer"   v-model="answerData" value="t" @change="handleInput"  >
                 <label for="trueAnswer">True</label>
                 <br/>
 
@@ -55,9 +55,8 @@
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
                 answerData:'',
                 correctAnswers: [],
-                userAnswers: [],
-                arr: []
-
+                userAnswer:'',
+                arr: [],
             }
         },
 
@@ -76,7 +75,10 @@
             // }
         },
 
-        computed: {},
+        computed: {
+
+
+        },
 
         created() {
             console.log('question created');
@@ -84,15 +86,22 @@
         },
 
         methods: {
-            handleInput() {
+            handleInput(event) {
+                this.userAnswer = event.target.value;
+        console.log(this.answer);
+                console.log('handleinput');
+                this.answerData = event.target.value;
                 console.log(this.answerData);
-                this.userAnswers.push(this.answerData);
-                console.log(this.userAnswers);
-            },
+                if(this.answer = this.userAnswer) {
+                    console.log('jez');
+                } else {
+                    console.log('noz');
+// -------------------------------------------------------------------tu
+                }
+                console.log('handleinput');
+                this.$emit('addUserAnswerInToArray', this.answerData );
 
-            showResults() {
-                this.$refs.quiz.submitAnswers();
-            }
+            },
 
         }
     }
