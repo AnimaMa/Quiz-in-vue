@@ -8,6 +8,8 @@
     </div>
 </template>
 
+<!--///////////nic-->
+
 <script>
     export default {
         mounted() {
