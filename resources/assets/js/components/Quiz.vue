@@ -12,23 +12,29 @@
 
             <div class="questions" v-if="startQuiz">
                 <h1 class="h2 tac"> {{titleQuiz}}</h1>
-                <div class="question">
+                <div class="question" v-show="showQuestions">
 
-                    <question v-for="(question, index) in questions" v-show="index === questionIndex " @addUserAnswerInToArray="addAnswer"
+                    <question v-for="(question, index) in questions" v-show="index === questionIndex"
+                              @addUserAnswerInToArray="addAnswer"
                               :question="question.text"
                               :answer="question.answer"
                               :answers="question.answers"
                               :type="question.type"
                               :question-number="index+1"
+                              :index="index"
                     >
                     </question>
 
                     <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
-                    <button v-on:click="nextQuestion" >next</button>
+                    <button v-on:click="nextQuestion"  :disabled="questionIndex === questions.length-1">next</button>
+                    <br>
+                    <br>
+                    <br>
+                    <button @click="showResults"> Submit Answers</button>
+
 
                 </div>
-                <button > Submit Answers</button>
-
+                <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your percentage is {{percentage}}%</div>
             </div>
 
             <div v-if="this.questions">
@@ -51,8 +57,6 @@
 
         data() {
             return {
-                jsonUrl: '',
-                // https://api.myjson.com/bins/upx5o,https://api.myjson.com/bins/f8nfg
                 urls:
                     {
                         food: 'https://api.myjson.com/bins/jqa3o',
@@ -65,31 +69,33 @@
 
                 startQuiz: false,
                 titleQuiz: '',
-                // questionText: '',
                 questionAnswers: [],
-                // questionOptions: '',
                 questions: [],
                 // answers: [],
                 questionIndex: 0,
-                userAnswers:[]
+                userAnswers: [],
+                correctAnswers: [],
+                correct: 0,
+                showPoints: false,
+                showQuestions: false,
+                percentage: 0
+
             }
         },
-//ak skor potvrdi submit ako vyplni vsetky tak ho upozornit
+
+        //ak skor potvrdi submit ako vyplni vsetky tak ho upozornit
         //automaticky po zaskrtnuti sa nacita dalsia otazka //watch
-//mozno po skontrolovani odpovedi pridat aj vysvetlenie preco to je tak
+        //mozno po skontrolovani odpovedi pridat aj vysvetlenie preco to je tak
+        //musime do this.answer nastavit hodnotu ked sa nacita otazka, nieked kviz
         computed: {
-            checkAnswers: function () {
-                console.log('check answers');
-                // this.questions.filter( que => {
-                //     console.log(que);
-                // })
-            },
+
+            percentageRes: function () {
+                return (this.correct / this.questions.length)*100;
+            }
 
         },
 
-        watch: {
-
-        },
+        watch: {},
 
         methods: {
             getData() {
@@ -97,8 +103,6 @@
                 this.jsonUrl = this.urls[this.themeModel];
                 console.log(this.jsonUrl);
                 this.start(this.jsonUrl);
-
-
             },
 
             start(jsonUrl) {
@@ -108,27 +112,20 @@
                     .then((response) => {
                         console.log(response.data);
                         this.startQuiz = true;
-
                         this.titleQuiz = response.data.title;
                         this.questions = response.data.questions;
                         this.type = response.data.questions.type;
+                        this.showQuestions = true;
 
-                        response.data.questions.filter(que => {
-
-                            if (que.answers) {
-                                this.answers.push(que.answers);
-                                // this.answer = que.answer;
-                                console.log(this.answers);
-                            }
+                        this.questions.forEach(que => {
+                            this.correctAnswers.push(que.answer);
                         });
-
 
                     })
                     .catch((error) => {
                         console.log(error);
                     });
             },
-//musime do this.answer nastavit hodnotu ked sa nacita otazka, nieked kviz
 
             nextQuestion() {
                 this.questionIndex++;
@@ -136,50 +133,28 @@
 
             prevQuestion() {
                 this.questionIndex--;
-
             },
 
-            addAnswer(value) {
-
-                console.log('------*-*');
-                console.log(this.answer);
-                this.userAnswers.push(value);
-
-
-
-                // console.log(this.question.ans);
-                // this.questions.forEach( que => {
-                //
-                //     if(value === this.answer) {
-                //         console.log('yes');
-                //     }
-                //     else {
-                //         console.log('nope');
-                //     }
-                // });
-
-              //   this.userAnswers = value;
-                console.log(this.userAnswers)
+            addAnswer(value, index) {
+                this.userAnswers[index] = value;
             },
+//odpoved undefined
+            showResults() {
+                this.showQuestions = false;
+                for (let i=0; i < this.correctAnswers.length; i++) {
+                    if (this.correctAnswers[i] === this.userAnswers[i]){
+                        console.log(this.correctAnswers[i] + ' - - ' + this.userAnswers[i]);
+                        this.correct++;
+                    }
+                }
+                this.percentage = this.percentageRes;
 
-            // showResults(value) {
-            //     console.log( value);
-            //     this.child = value;
-            //     console.log(this);
-            //     this.questions.forEach( que  => {
-            //         console.log(que.answer);
-            //         console.log('------------------------');
-            //
-            //         // console.log(this.answerData);
-            //         // console.log(questionIndex + 1);
-            //     })
-            //
-            // },
-
+                this.showPoints = true;
+            }
         },
 
         mounted() {
-            console.log('Compon ent mounted.')
+            console.log('Component mounted.')
         }
     }
 </script>

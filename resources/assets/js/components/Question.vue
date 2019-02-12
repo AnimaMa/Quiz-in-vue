@@ -33,6 +33,7 @@
 
             </div>
 
+
         </div>
     </div>
 
@@ -47,16 +48,16 @@
         components: {},
         name: 'Question',
         props: [
-            'question', 'answer', 'questionNumber', 'type', 'answers', 'mcanswer',
+            'question', 'answer', 'questionNumber', 'type', 'answers', 'mcanswer', 'index'
         ],
 
         data() {
             return {
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
                 answerData:'',
-                correctAnswers: [],
-                userAnswer:'',
-                arr: [],
+                // correctAnswers: [],
+
+
             }
         },
 
@@ -77,32 +78,16 @@
 
         computed: {
 
-
         },
 
         created() {
             console.log('question created');
-            // this.answerData = this.answer;
         },
 
         methods: {
-            handleInput(event) {
-                this.userAnswer = event.target.value;
-        console.log(this.answer);
-                console.log('handleinput');
-                this.answerData = event.target.value;
-                console.log(this.answerData);
-                if(this.answer = this.userAnswer) {
-                    console.log('jez');
-                } else {
-                    console.log('noz');
-// -------------------------------------------------------------------tu
-                }
-                console.log('handleinput');
-                this.$emit('addUserAnswerInToArray', this.answerData );
-
+            handleInput() {
+                this.$emit('addUserAnswerInToArray', this.answerData, this.index);
             },
-
         }
     }
 
