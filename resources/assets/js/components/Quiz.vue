@@ -150,6 +150,27 @@
                 this.percentage = this.percentageRes;
 
                 this.showPoints = true;
+
+                for (var value of this.questions) {
+                    console.log(value);
+                }
+
+
+console.log('results');
+                for(let i = 0; i < this.questions.length; i++) {
+                    console.log('results2');
+
+                    if (this.questions[i] === this.userAnswers[i]) {
+                        console.log(this.questions[i]);
+                    }
+                }
+
+                // this.questions.forEach( q => {
+                //     if (q.answer === this.userAnswers['value']) {
+                //         console.log(q.answer);
+                //
+                //     }
+                // })
             }
         },
 
