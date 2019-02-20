@@ -12,7 +12,11 @@
 
             <div class="questions" v-if="startQuiz">
                 <h1 class="h2 tac"> {{titleQuiz}}</h1>
+
+                <count-down :num-of-questions="questions.length"> </count-down>
+
                 <div class="question" v-show="showQuestions">
+
 
                     <question v-for="(question, index) in questions" v-show="index === questionIndex"
                               @addUserAnswerInToArray="addAnswer"
@@ -26,7 +30,7 @@
                     </question>
 
                     <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
-                    <button v-on:click="nextQuestion"  :disabled="questionIndex === questions.length-1">next</button>
+                    <button v-on:click="nextQuestion" :disabled="questionIndex === questions.length-1">next</button>
                     <br>
                     <br>
                     <br>
@@ -34,7 +38,9 @@
 
 
                 </div>
-                <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your percentage is {{percentage}}%</div>
+                <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your
+                    percentage is {{percentage}}%
+                </div>
             </div>
 
             <div v-if="this.questions">
@@ -48,11 +54,13 @@
 
 <script>
     import Question from './Question.vue';
+    import CountDown from "./CountDown.vue";
 
     export default {
         template: 'Quiz',
         components: {
-            Question
+            Question,
+            CountDown
         },
 
         data() {
@@ -90,7 +98,7 @@
         computed: {
 
             percentageRes: function () {
-                return (this.correct / this.questions.length)*100;
+                return (this.correct / this.questions.length) * 100;
             }
 
         },
@@ -108,6 +116,7 @@
             start(jsonUrl) {
                 console.log('START');
 
+
                 axios.get(jsonUrl)
                     .then((response) => {
                         console.log(response.data);
@@ -121,6 +130,10 @@
                             this.correctAnswers.push(que.answer);
                         });
 
+                        // this.$refs.timeR.counter();
+                        this.$on('eventGreet', () => {
+                           console.log('noooo');
+                        });
                     })
                     .catch((error) => {
                         console.log(error);
@@ -141,8 +154,8 @@
 //odpoved undefined
             showResults() {
                 this.showQuestions = false;
-                for (let i=0; i < this.correctAnswers.length; i++) {
-                    if (this.correctAnswers[i] === this.userAnswers[i]){
+                for (let i = 0; i < this.correctAnswers.length; i++) {
+                    if (this.correctAnswers[i] === this.userAnswers[i]) {
                         console.log(this.correctAnswers[i] + ' - - ' + this.userAnswers[i]);
                         this.correct++;
                     }
@@ -151,13 +164,13 @@
 
                 this.showPoints = true;
 
-                for (var value of this.questions) {
-                    console.log(value);
-                }
+                //  for (let value of this.questions) {
+                //    console.log(value);
+                //}
 
 
-console.log('results');
-                for(let i = 0; i < this.questions.length; i++) {
+                console.log('results');
+                for (let i = 0; i < this.questions.length; i++) {
                     console.log('results2');
 
                     if (this.questions[i] === this.userAnswers[i]) {

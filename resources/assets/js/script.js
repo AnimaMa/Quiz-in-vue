@@ -34,7 +34,8 @@ const app = new Vue({
         // VueHeader: require('./components/VueHeader.vue'),
         // Detail: require('./components/Detail.vue'),
         Home: require('./components/Home.vue'),
-        Quiz: require('./components/Quiz.vue')
+        Quiz: require('./components/Quiz.vue'),
+        CountDown: require('./components/CountDown.vue')
         // Search: require('./components/Search.vue'),
     },
 
