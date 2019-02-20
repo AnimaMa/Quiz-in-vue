@@ -2,11 +2,16 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 const axios = require('axios');
+const moment = require('moment');
+console.log(moment().format());
+
+moment().format();
+
 
 import Home from './components/Home.vue';
 import Quiz from './components/Quiz.vue';
 
-
+window.moment = moment;
 window.Vue = Vue;
 window.axios = axios;
 Vue.config.debug = true;

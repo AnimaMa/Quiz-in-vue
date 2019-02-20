@@ -13,7 +13,7 @@
             <div class="questions" v-if="startQuiz">
                 <h1 class="h2 tac"> {{titleQuiz}}</h1>
 
-                <count-down :num-of-questions="questions.length"> </count-down>
+                <count-down :num-of-questions="questions.length" @timeExpired="showResults"> </count-down>
 
                 <div class="question" v-show="showQuestions">
 
@@ -26,6 +26,7 @@
                               :type="question.type"
                               :question-number="index+1"
                               :index="index"
+
                     >
                     </question>
 
@@ -79,7 +80,6 @@
                 titleQuiz: '',
                 questionAnswers: [],
                 questions: [],
-                // answers: [],
                 questionIndex: 0,
                 userAnswers: [],
                 correctAnswers: [],
@@ -131,9 +131,10 @@
                         });
 
                         // this.$refs.timeR.counter();
-                        this.$on('eventGreet', () => {
-                           console.log('noooo');
-                        });
+                        // this.$on('start', () => {
+                        //    console.log('noooo');
+                        // });
+
                     })
                     .catch((error) => {
                         console.log(error);
@@ -151,8 +152,12 @@
             addAnswer(value, index) {
                 this.userAnswers[index] = value;
             },
-//odpoved undefined
+            handler(params) {
+                console.log(params);
+            },
+
             showResults() {
+
                 this.showQuestions = false;
                 for (let i = 0; i < this.correctAnswers.length; i++) {
                     if (this.correctAnswers[i] === this.userAnswers[i]) {
@@ -164,11 +169,6 @@
 
                 this.showPoints = true;
 
-                //  for (let value of this.questions) {
-                //    console.log(value);
-                //}
-
-
                 console.log('results');
                 for (let i = 0; i < this.questions.length; i++) {
                     console.log('results2');
@@ -178,12 +178,6 @@
                     }
                 }
 
-                // this.questions.forEach( q => {
-                //     if (q.answer === this.userAnswers['value']) {
-                //         console.log(q.answer);
-                //
-                //     }
-                // })
             }
         },
 

@@ -1,13 +1,14 @@
 <template>
     <div>
+        <p v-show="time" v-text=" '00:' + seconds" ></p>
 
-        <p @click="counter">button</p>
-        <p v-show="time" v-text=" '00:' + seconds"></p>
+        <div v-show="showAw">Čas vypršal</div>
     </div>
 </template>
 
 <script>
     import $ from 'jquery';
+    import moment from 'moment';
 
     export default {
         name: 'CountDown',
@@ -20,48 +21,45 @@
                 minutes: 0,
                 multiplier: 10,
                 seconds: '',
-                time: false
+                time: false,
+                showAw:false,
             }
         },
 
         watch: {},
 
-        computed: {
-            // getSeconds: function () {
-            //    return this.seconds = Math.floor(this.multiplier * this.numOfQuestions);
-            //
-            // }
-
-
-        },
+        computed: {},
 
         created() {
             console.log('countdown created');
             console.log(this.numOfQuestions);
+            this.counter();
         },
 
         methods: {
-            counter() {
-                this.seconds = 5;
-                // this.seconds = Math.floor(this.multiplier * this.numOfQuestions) + 1;
+            counter: function () {
+                this.seconds = 8;
+                // this.seconds = Math.floor(this.multiplier * this.numOfQuestions);
                 this.time = true;
-                // this.$emit('startCountDown');
+
                 let down = setInterval(() => {
 
                     this.seconds--;
                     console.log(this.seconds);
-                    if (this.seconds === 0) {
+
+
+                    if (this.seconds <= 0) {
                         console.log('ende');
+
+                        this.showAw = true;
+                        this.time = false;
+                        this.$emit('timeExpired');
+
                         this.seconds = 0;
                         clearInterval(down);
-                        // this.$emit('showResults');
-                this.$emit('eventGreet');
-
                     }
 
                 }, 1000);
-                console.log(this.getSeconds);
-
             }
 
         }
