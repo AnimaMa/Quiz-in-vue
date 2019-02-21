@@ -1,8 +1,7 @@
 <template>
     <div class="container">
         <div>
-            Chcem vyskusat
-            <router-link :to="'quiz'">Quiz</router-link>
+            <router-link :to="'competition'"><h3 class="h2">Competition</h3></router-link>
         </div>
 
     </div>

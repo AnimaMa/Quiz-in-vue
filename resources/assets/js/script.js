@@ -10,6 +10,7 @@ moment().format();
 
 import Home from './components/Home.vue';
 import Quiz from './components/Quiz.vue';
+import Competition from './components/Competition.vue' ;
 
 window.moment = moment;
 window.Vue = Vue;
@@ -19,6 +20,7 @@ Vue.use(VueRouter);
 const JsonUrl = 'https://api.myjson.com/bins/by3ao';
 const routes = [
     {path: '/home', component: Home},
+    {path: '/competition', component: Competition},
     {path: '/quiz', component: Quiz}
 ];
 
@@ -39,6 +41,8 @@ const app = new Vue({
         // VueHeader: require('./components/VueHeader.vue'),
         // Detail: require('./components/Detail.vue'),
         Home: require('./components/Home.vue'),
+        Competition: require('./components/Competition.vue'),
+
         Quiz: require('./components/Quiz.vue'),
         CountDown: require('./components/CountDown.vue'),
         SummaryTable: require('./components/SummaryTable.vue')

@@ -20,7 +20,7 @@
 
   <header>
       <router-link to="/home">Home</router-link> |
-      <router-link to="/quiz">Quiz</router-link>
+      <router-link to="/competition">Competition</router-link>
   </header>
     {{--<router-link to="/searching">Searching</router-link>--}}
     <router-view></router-view>

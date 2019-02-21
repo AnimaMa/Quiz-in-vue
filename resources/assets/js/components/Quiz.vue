@@ -4,23 +4,24 @@
             <!--<a href="#" @click.stop.prevent="start" class="startButton">START☻</a>-->
             <br>
 
-            <div v-for="theme in  themes" v-if="!startQuiz">
+            <div v-for="theme in  themes" v-if="!startQuiz" >
                 <!--<input type="radio" name="theme" id="theme" v-model="theme" value="{{ theme}}" @onchange="getData"  >-->
                 <input type="radio" name="theme" :id="theme" :value="theme" v-model="themeModel" @change="getData">
                 <label :for="theme">{{theme}}</label><br/>
             </div>
-            <summary-table v-if="startQuiz"></summary-table>
 
 
             <div class="questions" v-if="startQuiz">
-                <h1 class="h2 tac"> {{titleQuiz}}</h1>
+                <h1 class="h2 tac">{{titleQuiz}}</h1>
 
-                <count-down :num-of-questions="questions.length" @timeExpired="showResults"
-                            :isTimeOn="time"></count-down>
+                <count-down :num-of-questions="questions.length"
+                            @timeExpired="showResults"
+                            :isTimeOn="time"/>
 
                 <div class="question" v-show="showQuestions">
 
-                    <question v-for="(question, index) in questions" v-show="index === questionIndex"
+                    <question v-for="(question, index) in questions"
+                              v-show="index === questionIndex"
                               @addUserAnswerInToArray="addAnswer"
                               :question="question.text"
                               :answer="question.answer"
@@ -28,7 +29,6 @@
                               :type="question.type"
                               :question-number="index+1"
                               :index="index"
-
                     >
                     </question>
 
@@ -37,7 +37,7 @@
                     <br>
                     <br>
                     <br>
-                    <button @click="showResults"> Submit Answers</button>
+                    <button @click="showResults">Submit Answers</button>
 
 
                 </div>
@@ -60,14 +60,12 @@
 <script>
     import Question from './Question.vue';
     import CountDown from "./CountDown.vue";
-    import SummaryTable from "./SummaryTable.vue";
 
     export default {
         template: 'Quiz',
         components: {
             Question,
             CountDown,
-            SummaryTable
         },
 
         data() {
@@ -81,7 +79,6 @@
 
                 themes: ['food', 'animals', 'slovakia'],
                 themeModel: '',
-
                 startQuiz: false,
                 titleQuiz: '',
                 questionAnswers: [],
@@ -95,7 +92,6 @@
                 percentage: 0,
                 time: true,
 
-
             }
         },
 
@@ -104,24 +100,22 @@
         //mozno po skontrolovani odpovedi pridat aj vysvetlenie preco to je tak
         //musime do this.answer nastavit hodnotu ked sa nacita otazka, nieked kviz
         computed: {
-
             percentageRes: function () {
                 return (this.correct / this.questions.length) * 100;
             }
-
         },
 
         watch: {},
 
         methods: {
-            getData() {
-                console.log(this.themeModel);
-                this.jsonUrl = this.urls[this.themeModel];
-                console.log(this.jsonUrl);
-                this.start(this.jsonUrl);
-                localStorage.theme = this.themeModel;
-
-            },
+            // getData() {
+            //     console.log(this.themeModel);
+            //     this.jsonUrl = this.urls[this.themeModel];
+            //     console.log(this.jsonUrl);
+            //     this.start(this.jsonUrl);
+            //     localStorage.theme = this.themeModel;
+            //
+            // },
 
             start(jsonUrl) {
                 console.log('START');
@@ -138,7 +132,6 @@
                         this.questions.forEach(que => {
                             this.correctAnswers.push(que.answer);
                         });
-
                         // this.$refs.timeR.counter();
                         // this.$on('start', () => {
                         //    console.log('noooo');
@@ -189,36 +182,12 @@
                         console.log(this.questions[i]);
                     }
                 }
-
-                localStorage.percente = this.percentageRes;
-                localStorage.right = this.correct;
-
             },
 
-            storage() {
-                console.log('storage' + localStorage.percente)
-
-                let objectResults = {
-                    'thema': this.themeModel,
-                    'right': this.correct,
-                    'percent': this.percentageRes
-                };
-
-                // Put the object into storage
-                localStorage.setItem('objectResults', JSON.stringify(objectResults));
-
-                // Retrieve the object from storage
-                let retrievedObjectResults = localStorage.getItem('objectResults');
-
-                console.log('retrievedObject: ', JSON.parse(retrievedObjectResults));
-                localStorage.clear();
-
-
-            }
         },
 
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component  Quiz mounted.')
         }
     }
 </script>
