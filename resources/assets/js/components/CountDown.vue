@@ -1,8 +1,8 @@
 <template>
     <div>
-        <p v-show="time" v-text=" '00:' + seconds" ></p>
+        <p  v-show="isTimeOn" v-text=" '00:' + seconds"  ></p>
 
-        <div v-show="showAw">Čas vypršal</div>
+        <div v-show="timeExpired">Your time expired</div>
     </div>
 </template>
 
@@ -13,7 +13,9 @@
     export default {
         name: 'CountDown',
         props: {
-            numOfQuestions: Number
+            numOfQuestions: Number,
+            isTimeOn: Boolean,
+
         },
 
         data() {
@@ -22,13 +24,16 @@
                 multiplier: 10,
                 seconds: '',
                 time: false,
-                showAw:false,
+                timeExpired:false,
+
             }
         },
 
         watch: {},
 
-        computed: {},
+        computed: {
+
+        },
 
         created() {
             console.log('countdown created');
@@ -38,28 +43,32 @@
 
         methods: {
             counter: function () {
-                this.seconds = 8;
+                this.seconds = 5;
                 // this.seconds = Math.floor(this.multiplier * this.numOfQuestions);
-                this.time = true;
+                this.isTimeOn = true;
+                // localStorage.seconds = this.seconds;
 
-                let down = setInterval(() => {
+                let countDown = setInterval(() => {
 
                     this.seconds--;
                     console.log(this.seconds);
 
-
                     if (this.seconds <= 0) {
                         console.log('ende');
-
-                        this.showAw = true;
-                        this.time = false;
                         this.$emit('timeExpired');
-
+                        this.timeExpired = true;
                         this.seconds = 0;
-                        clearInterval(down);
+                        clearInterval(countDown);
+                    }
+
+                    if (this.isTimeOn === false) {
+                        console.log('offffffffff')
+                        clearInterval(countDown)
+
                     }
 
                 }, 1000);
+
             }
 
         }

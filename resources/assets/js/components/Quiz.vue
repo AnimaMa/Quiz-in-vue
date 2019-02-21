@@ -9,14 +9,16 @@
                 <input type="radio" name="theme" :id="theme" :value="theme" v-model="themeModel" @change="getData">
                 <label :for="theme">{{theme}}</label><br/>
             </div>
+            <summary-table v-if="startQuiz"></summary-table>
+
 
             <div class="questions" v-if="startQuiz">
                 <h1 class="h2 tac"> {{titleQuiz}}</h1>
 
-                <count-down :num-of-questions="questions.length" @timeExpired="showResults"> </count-down>
+                <count-down :num-of-questions="questions.length" @timeExpired="showResults"
+                            :isTimeOn="time"></count-down>
 
                 <div class="question" v-show="showQuestions">
-
 
                     <question v-for="(question, index) in questions" v-show="index === questionIndex"
                               @addUserAnswerInToArray="addAnswer"
@@ -39,6 +41,8 @@
 
 
                 </div>
+                <button @click="storage"> Storage</button>
+
                 <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your
                     percentage is {{percentage}}%
                 </div>
@@ -56,12 +60,14 @@
 <script>
     import Question from './Question.vue';
     import CountDown from "./CountDown.vue";
+    import SummaryTable from "./SummaryTable.vue";
 
     export default {
         template: 'Quiz',
         components: {
             Question,
-            CountDown
+            CountDown,
+            SummaryTable
         },
 
         data() {
@@ -86,7 +92,9 @@
                 correct: 0,
                 showPoints: false,
                 showQuestions: false,
-                percentage: 0
+                percentage: 0,
+                time: true,
+
 
             }
         },
@@ -111,11 +119,12 @@
                 this.jsonUrl = this.urls[this.themeModel];
                 console.log(this.jsonUrl);
                 this.start(this.jsonUrl);
+                localStorage.theme = this.themeModel;
+
             },
 
             start(jsonUrl) {
                 console.log('START');
-
 
                 axios.get(jsonUrl)
                     .then((response) => {
@@ -159,6 +168,9 @@
             showResults() {
 
                 this.showQuestions = false;
+
+                this.time = false;
+
                 for (let i = 0; i < this.correctAnswers.length; i++) {
                     if (this.correctAnswers[i] === this.userAnswers[i]) {
                         console.log(this.correctAnswers[i] + ' - - ' + this.userAnswers[i]);
@@ -177,6 +189,30 @@
                         console.log(this.questions[i]);
                     }
                 }
+
+                localStorage.percente = this.percentageRes;
+                localStorage.right = this.correct;
+
+            },
+
+            storage() {
+                console.log('storage' + localStorage.percente)
+
+                let objectResults = {
+                    'thema': this.themeModel,
+                    'right': this.correct,
+                    'percent': this.percentageRes
+                };
+
+                // Put the object into storage
+                localStorage.setItem('objectResults', JSON.stringify(objectResults));
+
+                // Retrieve the object from storage
+                let retrievedObjectResults = localStorage.getItem('objectResults');
+
+                console.log('retrievedObject: ', JSON.parse(retrievedObjectResults));
+                localStorage.clear();
+
 
             }
         },

@@ -40,7 +40,8 @@ const app = new Vue({
         // Detail: require('./components/Detail.vue'),
         Home: require('./components/Home.vue'),
         Quiz: require('./components/Quiz.vue'),
-        CountDown: require('./components/CountDown.vue')
+        CountDown: require('./components/CountDown.vue'),
+        SummaryTable: require('./components/SummaryTable.vue')
         // Search: require('./components/Search.vue'),
     },
 
