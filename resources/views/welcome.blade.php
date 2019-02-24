@@ -19,11 +19,17 @@
 <div id="app">
 
   <header>
-      <router-link to="/home">Home</router-link> |
-      <router-link to="/competition">Competition</router-link>
+     <div class="wrap">
+         <router-link to="/home">Home</router-link>
+         <router-link to="/competition">Competitions</router-link>
+         <router-link to="/quiz"> Quizzes</router-link>
+
+     </div>
   </header>
     {{--<router-link to="/searching">Searching</router-link>--}}
-    <router-view></router-view>
+    <div class="wrap">
+        <router-view></router-view>
+    </div>
 
 </div>
 

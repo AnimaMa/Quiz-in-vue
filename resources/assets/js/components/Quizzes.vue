@@ -6,64 +6,62 @@
 
             <p class="h3">Choose a theme</p>
 
-            <div v-for="theme in  themes" v-if="!startQuiz" class="themeGroup" >
+            <quiz v-for="theme in  themes" v-if="!startQuiz" class="themeGroup" >
                 <input type="radio" name="theme" :id="theme" :value="theme" v-model="themeModel" @change="getData" title="themeModel">
                 <label :for="theme">{{theme}}</label><br/>
-            </div>
+            </quiz>
 
-            <div class="questions" v-if="startQuiz">
-                <h1 class="h2 tac">{{titleQuiz}}</h1>
+            <!--<div class="questions" v-if="startQuiz">-->
+                <!--<h1 class="h2 tac">{{titleQuiz}}</h1>-->
 
-                <count-down :num-of-questions="questions.length"
-                            @timeExpired="showResults"
-                            :isTimeOn="time"/>
+                <!--<count-down :num-of-questions="questions.length"-->
+                            <!--@timeExpired="showResults"-->
+                            <!--:isTimeOn="time"/>-->
 
-                <div class="question" v-show="showQuestions">
+                <!--<div class="question" v-show="showQuestions">-->
 
-                    <question v-for="(question, index) in questions"
-                              v-show="index === questionIndex"
-                              @addUserAnswerInToArray="addAnswer"
-                              :question="question.text"
-                              :answer="question.answer"
-                              :answers="question.answers"
-                              :type="question.type"
-                              :question-number="index+1"
-                              :index="index"
-                    >
-                    </question>
+                    <!--<question v-for="(question, index) in questions"-->
+                              <!--v-show="index === questionIndex"-->
+                              <!--@addUserAnswerInToArray="addAnswer"-->
+                              <!--:question="question.text"-->
+                              <!--:answer="question.answer"-->
+                              <!--:answers="question.answers"-->
+                              <!--:type="question.type"-->
+                              <!--:question-number="index+1"-->
+                              <!--:index="index"-->
+                    <!--&gt;-->
+                    <!--</question>-->
 
-                    <button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>
-                    <button v-on:click="nextQuestion" :disabled="questionIndex === questions.length-1">next</button>
-                    <br>
-                    <br>
-                    <br>
-                    <button @click="showResults">Submit Answers</button>
+                    <!--<button v-on:click="prevQuestion" :disabled="questionIndex < 1">prev</button>-->
+                    <!--<button v-on:click="nextQuestion" :disabled="questionIndex === questions.length-1">next</button>-->
+                    <!--<br>-->
+                    <!--<br>-->
+                    <!--<br>-->
+                    <!--<button @click="showResults">Submit Answers</button>-->
 
 
-                </div>
+                <!--</div>-->
 
-                <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your
-                    percentage is {{percentage}}%
-                </div>
-            </div>
+                <!--<div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your-->
+                    <!--percentage is {{percentage}}%-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div v-if="this.questions">
-                {{ this.questions}}
-            </div>
+            <!--<div v-if="this.questions">-->
+                <!--{{ this.questions}}-->
+            <!--</div>-->
         </div>
 
     </div>
 </template>
 
 <script>
-    import Question from './Question.vue';
-    import CountDown from "./CountDown.vue";
+    import Quiz from './Quiz.vue';
 
     export default {
-        template: 'Quiz',
+        template: 'Quizzes',
         components: {
-            Question,
-            CountDown,
+            Quiz,
         },
 
         data() {
@@ -184,7 +182,7 @@
         },
 
         mounted() {
-            console.log('Component  Quiz mounted.')
+            console.log('Component  Quizzes mounted.')
         }
     }
 </script>

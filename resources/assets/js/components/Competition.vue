@@ -2,17 +2,13 @@
     <div class="container">
 
 
-        <div v-for="theme in  themes" v-if="!startQuiz" >
-            <!--<input type="radio" name="theme" id="theme" v-model="theme" value="{{ theme}}" @onchange="getData"  >-->
-            <input type="radio" name="theme" :id="theme" :value="theme" v-model="themeModel" @change="getData">
-            <label :for="theme">{{theme}}</label><br/>
+        <div class="">
+            <div>
+                <router-link :to="'quiz'"><h3 class="h2">Quizzes</h3></router-link>
+            </div>
+
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <button @click="storage"> Storage</button>
 
             <summary-table
                     :quizTheme="objectResults.thema"
@@ -35,15 +31,6 @@
 
         data() {
             return {
-                urls:
-                    {
-                        food: 'https://api.myjson.com/bins/jqa3o',
-                        animals: 'https://api.myjson.com/bins/upx5o',
-                        slovakia: 'https://api.myjson.com/bins/f8nfg'
-                    },
-
-                themes: ['food', 'animals', 'slovakia'],
-                themeModel: '',
 
                 retrievedObjectResults: {},
                 objectResults: {}
@@ -56,11 +43,7 @@
 
         methods: {
             getData() {
-                console.log(this.themeModel);
-                this.jsonUrl = this.urls[this.themeModel];
-                console.log(this.jsonUrl);
-
-                this.start(this.jsonUrl);
+                // console.log(this.themeModel);
 
                 localStorage.theme = this.themeModel;
 

@@ -19,9 +19,9 @@
 {{--@yield('header')--}}
 
 
-<section class="content">
-    @yield('content')
-</section>
+{{--<section class="content">--}}
+   {{--<div class="wrap"> @yield('content')</div>--}}
+{{--</section>--}}
 
 <footer>
 
