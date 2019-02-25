@@ -10,7 +10,8 @@ moment().format();
 
 import Home from './components/Home.vue';
 import Quiz from './components/Quiz.vue';
-import Competition from './components/Competition.vue' ;
+import Quizzes from './components/Quizzes.vue';
+import Competitions from './components/Competitions.vue' ;
 
 window.moment = moment;
 window.Vue = Vue;
@@ -20,8 +21,10 @@ Vue.use(VueRouter);
 const JsonUrl = 'https://api.myjson.com/bins/by3ao';
 const routes = [
     {path: '/home', component: Home},
-    {path: '/competition', component: Competition},
-    {path: '/quiz', component: Quiz}
+    {path: '/competitions', component: Competitions},
+    {path: '/quizzes', component: Quizzes},
+    {path: '/quiz', component: Quiz},
+    {path: '/quiz/:id', component: Quiz, props: jsonU},
 ];
 
 const router = new VueRouter({
@@ -38,15 +41,15 @@ const app = new Vue({
 
     router,
     components: {
-        // VueHeader: require('./components/VueHeader.vue'),
-        // Detail: require('./components/Detail.vue'),
         Home: require('./components/Home.vue'),
-        Competition: require('./components/Competition.vue'),
+        Competitions: require('./components/Competitions.vue'),
 
         Quiz: require('./components/Quiz.vue'),
         CountDown: require('./components/CountDown.vue'),
-        SummaryTable: require('./components/SummaryTable.vue')
-        // Search: require('./components/Search.vue'),
+        SummaryTable: require('./components/SummaryTable.vue'),
+        Quizzes: require('./components/Quizzes.vue')
+
+
     },
 
 }).$mount('#app');

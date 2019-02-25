@@ -1,24 +1,26 @@
 <template>
     <div class="container">
         <div>
-            <!--<a href="#" @click.stop.prevent="start" class="startButton">START☻</a>-->
-            <br>
 
-            <p class="h3">Choose a theme</p>
+            <div>
+                <strong> this is quiz</strong>
 
-            <div v-for="theme in  themes" v-if="!startQuiz" class="themeGroup" >
-                <input type="radio" name="theme" :id="theme" :value="theme" v-model="themeModel" @change="getData" title="themeModel">
-                <label :for="theme">{{theme}}</label><br/>
+                <!--<div class="themeGroup" >-->
+                <!--<input type="radio" :name="theme" :id="theme" :value="theme" :v-model="theme" :title="theme">-->
+                <!--<label :for="theme">{{theme}}</label><br/>-->
+                <!--</div>-->
             </div>
 
-            <div class="questions" v-if="startQuiz">
+
+            <div class="quiz">
                 <h1 class="h2 tac">{{titleQuiz}}</h1>
 
                 <count-down :num-of-questions="questions.length"
                             @timeExpired="showResults"
-                            :isTimeOn="time"/>
+                            :isTimeOn="time"
+                            v-show="!timeExpired"/>
 
-                <div class="question" v-show="showQuestions">
+                <div class="question" >
 
                     <question v-for="(question, index) in questions"
                               v-show="index === questionIndex"
@@ -29,6 +31,7 @@
                               :type="question.type"
                               :question-number="index+1"
                               :index="index"
+
                     >
                     </question>
 
@@ -47,9 +50,6 @@
                 </div>
             </div>
 
-            <div v-if="this.questions">
-                {{ this.questions}}
-            </div>
         </div>
 
     </div>
@@ -65,18 +65,13 @@
             Question,
             CountDown,
         },
+        props: [
+            'theme',
+        ],
 
         data() {
             return {
-                urls:
-                    {
-                        food: 'https://api.myjson.com/bins/jqa3o',
-                        animals: 'https://api.myjson.com/bins/upx5o',
-                        slovakia: 'https://api.myjson.com/bins/f8nfg'
-                    },
-
-                themes: ['food', 'animals', 'slovakia'],
-                themeModel: '',
+                jsonUrl: 'https://api.myjson.com/bins/jqa3o',
                 startQuiz: false,
                 titleQuiz: '',
                 questionAnswers: [],
@@ -89,6 +84,8 @@
                 showQuestions: false,
                 percentage: 0,
                 time: true,
+                timeExpired: false
+
 
             }
         },
@@ -104,21 +101,27 @@
         },
 
         watch: {},
+        created() {
+            console.log('Quiz created');
+
+            this.start(this.jsonUrl);
+
+        },
 
         methods: {
             getData() {
-                console.log(this.themeModel);
-                this.jsonUrl = this.urls[this.themeModel];
+                console.log('getdataa');
                 console.log(this.jsonUrl);
                 this.start(this.jsonUrl);
-                localStorage.theme = this.themeModel;
 
             },
 
             start(jsonUrl) {
+                console.log(jsonUrl);
                 console.log('START');
                 axios.get(jsonUrl)
                     .then((response) => {
+                        console.log('response' + response.data);
                         console.log(response.data);
                         this.startQuiz = true;
                         this.titleQuiz = response.data.title;
@@ -129,6 +132,8 @@
                         this.questions.forEach(que => {
                             this.correctAnswers.push(que.answer);
                         });
+
+                        this.showQuestions = true;
                         // this.$refs.timeR.counter();
                         // this.$on('start', () => {
                         //    console.log('noooo');

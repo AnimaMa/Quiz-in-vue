@@ -21,9 +21,7 @@
   <header>
      <div class="wrap">
          <router-link to="/home">Home</router-link>
-         <router-link to="/competition">Competitions</router-link>
-         <router-link to="/quiz"> Quizzes</router-link>
-
+         <router-link to="/competitions">Competitions</router-link>
      </div>
   </header>
     {{--<router-link to="/searching">Searching</router-link>--}}

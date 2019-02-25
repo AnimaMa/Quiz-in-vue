@@ -15,7 +15,6 @@
         props: {
             numOfQuestions: Number,
             isTimeOn: Boolean,
-
         },
 
         data() {
@@ -25,14 +24,11 @@
                 seconds: '',
                 time: false,
                 timeExpired:false,
-
             }
         },
-
         watch: {},
 
         computed: {
-
         },
 
         created() {

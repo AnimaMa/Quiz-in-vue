@@ -4,7 +4,7 @@
 
         <div class="">
             <div>
-                <router-link :to="'quiz'"><h3 class="h2">Quizzes</h3></router-link>
+                <router-link :to="'quizzes'"><h3 class="h2">Quizzes</h3></router-link>
             </div>
 
         </div>
@@ -19,14 +19,13 @@
 </template>
 
 <script>
-    import Quiz from "./Quiz.vue";
     import SummaryTable from "./SummaryTable.vue";
 
     export default {
-        template: 'Competition',
+        template: 'Competitions',
         components: {
             SummaryTable,
-            Quiz
+            // Quizzes
         },
 
         data() {
@@ -48,8 +47,6 @@
                 localStorage.theme = this.themeModel;
 
             },
-
-
             storage() {
                 this.objectResults = {
                     'thema': this.themeModel,
