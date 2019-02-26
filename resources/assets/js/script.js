@@ -24,7 +24,7 @@ const routes = [
     {path: '/competitions', component: Competitions},
     {path: '/quizzes', component: Quizzes},
     {path: '/quiz', component: Quiz},
-    {path: '/quiz/:id', component: Quiz, props: jsonU},
+    {path: '/quiz/:id', component: Quiz, name: 'Quiz', props: true},
 ];
 
 const router = new VueRouter({

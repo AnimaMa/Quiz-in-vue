@@ -8,12 +8,12 @@
             </div>
 
         </div>
-        <button @click="storage"> Storage</button>
+        <!--<button @click="storage"> Storage</button>-->
 
-            <summary-table
-                    :quizTheme="objectResults.thema"
-                    :correctAnswers="objectResults.right"
-                    :percentages="objectResults.percent"/>
+            <!--<summary-table-->
+                    <!--:quizTheme="objectResults.thema"-->
+                    <!--:correctAnswers="objectResults.right"-->
+                    <!--:percentages="objectResults.percent"/>-->
 
     </div>
 </template>

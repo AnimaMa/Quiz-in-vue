@@ -1,26 +1,21 @@
 <template>
     <div class="container">
         <div>
-
-            <div>
-                <strong> this is quiz</strong>
-
-                <!--<div class="themeGroup" >-->
-                <!--<input type="radio" :name="theme" :id="theme" :value="theme" :v-model="theme" :title="theme">-->
-                <!--<label :for="theme">{{theme}}</label><br/>-->
-                <!--</div>-->
-            </div>
-
-
+            <button  @click="getData" v-show="!startQuiz">Start quizz</button>
             <div class="quiz">
                 <h1 class="h2 tac">{{titleQuiz}}</h1>
+
+                <img v-show="!startQuiz" src="/img/load1.gif" alt="loading">
 
                 <count-down :num-of-questions="questions.length"
                             @timeExpired="showResults"
                             :isTimeOn="time"
-                            v-show="!timeExpired"/>
+                            v-show="!timeExpired"
 
-                <div class="question" >
+
+                            />
+
+                <div class="question">
 
                     <question v-for="(question, index) in questions"
                               v-show="index === questionIndex"
@@ -41,7 +36,6 @@
                     <br>
                     <br>
                     <button @click="showResults">Submit Answers</button>
-
 
                 </div>
 
@@ -66,12 +60,11 @@
             CountDown,
         },
         props: [
-            'theme',
+            'theme', 'jsonUrl', 'id'
         ],
 
         data() {
             return {
-                jsonUrl: 'https://api.myjson.com/bins/jqa3o',
                 startQuiz: false,
                 titleQuiz: '',
                 questionAnswers: [],
@@ -83,10 +76,8 @@
                 showPoints: false,
                 showQuestions: false,
                 percentage: 0,
-                time: true,
-                timeExpired: false
-
-
+                time: false,
+                timeExpired: false,
             }
         },
 
@@ -103,22 +94,19 @@
         watch: {},
         created() {
             console.log('Quiz created');
-
-            this.start(this.jsonUrl);
-
         },
 
         methods: {
             getData() {
-                console.log('getdataa');
-                console.log(this.jsonUrl);
+                console.log('getdataa' + this.jsonUrl);
                 this.start(this.jsonUrl);
-
             },
 
             start(jsonUrl) {
                 console.log(jsonUrl);
                 console.log('START');
+
+
                 axios.get(jsonUrl)
                     .then((response) => {
                         console.log('response' + response.data);
@@ -132,14 +120,12 @@
                         this.questions.forEach(que => {
                             this.correctAnswers.push(que.answer);
                         });
-
                         this.showQuestions = true;
-                        // this.$refs.timeR.counter();
-                        // this.$on('start', () => {
-                        //    console.log('noooo');
-                        // });
+                        this.time = true;
 
+                        this.startQuiz = true;
                     })
+
                     .catch((error) => {
                         console.log(error);
                     });
@@ -185,7 +171,6 @@
                     }
                 }
             },
-
         },
 
         mounted() {

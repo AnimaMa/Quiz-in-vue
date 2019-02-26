@@ -22,6 +22,7 @@
      <div class="wrap">
          <router-link to="/home">Home</router-link>
          <router-link to="/competitions">Competitions</router-link>
+         <router-link to="/quizzes">Quizzes</router-link>
      </div>
   </header>
     {{--<router-link to="/searching">Searching</router-link>--}}

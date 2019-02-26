@@ -7,17 +7,14 @@
             <p class="h3">Choose a theme</p>
             <br>
 
-            <router-link :to="{detailUrl(key), params: { msg }}" v-for="(value, key) in urlsOfQuizzes"  >
-                <div class="themeGroup" >
-                    <input type="radio" :name="key" :id="key" :value="key" :v-model="key" :title="key"  >
+            <router-link :to="{ name: 'Quiz', params: {id: key, jsonUrl: value} }" v-for="(value, key) in urlsOfQuizzes" :jsonU="value" >
+
+                <div class="themeGroup">
+                    <input type="radio" :name="key" :id="key" :value="key" :v-model="key" :title="key">
                     <label :for="theme">{{key}}</label><br/>
                 </div>
             </router-link>
 
-            <!--<router-link :to="detailUrl(key)" v-for="(value, key) in urlsOfQuizzes" @click="getData">-->
-                <!--<quiz class="themeGroup" :theme="key" :jsonUrl="value">-->
-                <!--</quiz>-->
-            <!--</router-link>-->
             <br>
         </div>
 
@@ -50,6 +47,8 @@
         methods: {
             detailUrl(theme) {
                 return '/' + 'quiz' + '/' + theme;
+                // return this.$router.push({name: 'Quiz'})
+
             },
 
         },
