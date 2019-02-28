@@ -55,10 +55,7 @@
         data() {
             return {
                 jsonUrl: 'https://api.myjson.com/bins/by3ao',
-                answerData:'',
-                // correctAnswers: [],
-
-
+                answerData:'none',
             }
         },
 
@@ -82,8 +79,10 @@
         },
 
         created() {
+            // console.log('question created' + this.questionNumber);
             console.log('question created');
         },
+
 
         methods: {
             handleInput() {

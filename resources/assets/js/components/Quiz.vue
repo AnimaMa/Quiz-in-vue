@@ -1,21 +1,20 @@
 <template>
     <div class="container">
         <div>
-            <button  @click="getData" v-show="!startQuiz">Start quizz</button>
+            <button class="red"  @click="start" v-show="!startQuiz">Start quizz</button>
             <div class="quiz">
-                <h1 class="h2 tac">{{titleQuiz}}</h1>
+                <h1 class="h1 tac">{{titleQuiz}}</h1>
 
-                <img v-show="!startQuiz" src="/img/load1.gif" alt="loading">
+                <img v-show="!dataLoaded" src="/img/load1.gif" alt="loading" class="loadingImg">
 
                 <count-down :num-of-questions="questions.length"
                             @timeExpired="showResults"
                             :isTimeOn="time"
                             v-show="!timeExpired"
-
-
+                            :quiz-started="startQuiz"
                             />
 
-                <div class="question">
+                <div class="question" v-show="time" >
 
                     <question v-for="(question, index) in questions"
                               v-show="index === questionIndex"
@@ -35,27 +34,56 @@
                     <br>
                     <br>
                     <br>
-                    <button @click="showResults">Submit Answers</button>
+                    <button class="green" @click="showResults" v-show="time">Submit Answers</button>
 
                 </div>
+                <button class="green" @click="showAnswers" >Show answers</button>
 
-                <div v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your
-                    percentage is {{percentage}}%
+                <p v-if="showPoints">You got <strong>{{ correct}}</strong> right out of {{questions.length}}. Your
+                    percentage is <strong>{{percentage}}%</strong>
+                </p>
+
+                    <answers-table  v-show="!time"
+                                   :userAnswer="userA"
+                    />
+
+                    <div v-for="(ans, index) in userAnswers">
+                    Your answer>
+                  {{ans}}
+                    <div v-for="(que, i) in questions">
+                        <p v-if="i === index">
+                            {{que["text"]}}
+                        </p>
+                        <!--{{que}} + {{ i}}-->
+                    </div>
+
+                    <div v-for="(cor, ind) in correctAnswers">
+                        <p v-if="ind === index">
+                            Corect answer> {{cor}} </p>
+                        {{question}}
+                        <p v-if="questionIndex === ind">
+                            {{question}}
+                        </p>
+
+                    </div>
+                    <br>
+
                 </div>
             </div>
-
         </div>
-
     </div>
 </template>
 
 <script>
+    import EventBus  from '../EventBus.js';
     import Question from './Question.vue';
-    import CountDown from "./CountDown.vue";
+    import CountDown from './CountDown.vue';
+    import AnswersTable from "./AnswersTable.vue";
 
     export default {
         template: 'Quiz',
         components: {
+            AnswersTable,
             Question,
             CountDown,
         },
@@ -78,6 +106,8 @@
                 percentage: 0,
                 time: false,
                 timeExpired: false,
+                userA: '',
+                dataLoaded: false
             }
         },
 
@@ -97,20 +127,13 @@
         },
 
         methods: {
-            getData() {
-                console.log('getdataa' + this.jsonUrl);
-                this.start(this.jsonUrl);
-            },
 
-            start(jsonUrl) {
-                console.log(jsonUrl);
+            start() {
                 console.log('START');
 
-
-                axios.get(jsonUrl)
+                axios.get(this.jsonUrl)
                     .then((response) => {
                         console.log('response' + response.data);
-                        console.log(response.data);
                         this.startQuiz = true;
                         this.titleQuiz = response.data.title;
                         this.questions = response.data.questions;
@@ -122,8 +145,11 @@
                         });
                         this.showQuestions = true;
                         this.time = true;
+                        this.dataLoaded = true;
 
                         this.startQuiz = true;
+                        EventBus.$emit('quizStarted', this.questions.length);
+
                     })
 
                     .catch((error) => {
@@ -140,10 +166,13 @@
             },
 
             addAnswer(value, index) {
+                if (!value  ){
+                    console.log('pozor undefined ')
+                }
                 this.userAnswers[index] = value;
-            },
-            handler(params) {
-                console.log(params);
+                console.log('answers ');
+                console.log(this.userAnswers);
+                console.log('answers ');
             },
 
             showResults() {
@@ -167,10 +196,30 @@
                     console.log('results2');
 
                     if (this.questions[i] === this.userAnswers[i]) {
-                        console.log(this.questions[i]);
+                        console.log('totot' + this.questions[i]);
                     }
                 }
             },
+
+            showAnswers() {
+                console.log(this.userAnswers);
+                console.log(this.questions);
+
+                this.userAnswers.forEach((userAnswer, indexAns) => {
+                    console.log('USER ODPOVED: ' + userAnswer + indexAns);
+                    // this.userA = userAnswer;
+                    this.questions.forEach((question, indexQue)=> {
+
+                        if(indexQue === indexAns) {
+                            console.log('toto je otazka ' + question.text);
+                            console.log('toto je spravna ans ' + question.answer)
+                        }
+                    });
+
+
+                });
+                console.log(this.correctAnswers );
+            }
         },
 
         mounted() {

@@ -47,7 +47,8 @@ const app = new Vue({
         Quiz: require('./components/Quiz.vue'),
         CountDown: require('./components/CountDown.vue'),
         SummaryTable: require('./components/SummaryTable.vue'),
-        Quizzes: require('./components/Quizzes.vue')
+        Quizzes: require('./components/Quizzes.vue'),
+        AnswersTable: require('./components/AnswersTable.vue')
 
 
     },

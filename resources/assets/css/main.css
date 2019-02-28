@@ -109,6 +109,9 @@ a {
 img {
   max-width: 100%;
 }
+.tac {
+  text-align: center;
+}
 .wrap {
   margin: 0 auto;
   max-width: 1300px;
@@ -131,6 +134,7 @@ p {
   line-height: 28px;
   font-weight: 300;
   font-size: 19px;
+  margin: 10px 0;
 }
 strong {
   font-weight: bold;
@@ -147,7 +151,7 @@ strong {
   font-weight: 700;
   letter-spacing: 2px;
   color: #ffcd00;
-  font-size: 38px;
+  font-size: 35px;
   margin: 15px 0;
   line-height: 38px;
   letter-spacing: 6.5px;
@@ -240,6 +244,32 @@ strong {
     font-size: 15px;
     height: 57px;
   }
+}
+button {
+  color: #444;
+  background: #f3f3f3;
+  border: 1px #dadada solid;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  margin: 20px 0;
+}
+button:hover {
+  border: 1px #c6c6c6 solid;
+  box-shadow: 1px 1px 1px #eaeaea;
+  color: #333;
+  background: #f7f7f7;
+}
+button.red {
+  background: #ff5e5e;
+}
+button.green {
+  background: #6be786;
+}
+.expired {
+  color: #f61212;
 }
 header {
   background-color: #e9f7fa;
@@ -358,6 +388,11 @@ header a:hover {
   transform: translateY(-50%);
   cursor: pointer;
   visibility: hidden;
+}
+.loadingImg {
+  width: 200px;
+  display: block;
+  margin: 0 auto;
 }
 .startButton {
   background-color: #ffb6c1;

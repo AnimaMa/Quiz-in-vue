@@ -2,11 +2,15 @@
     <div>
         <p v-show="isTimeOn" :isTimeOn="time"     v-text=" '00:' + seconds"></p>
 
-        <div v-show="timeExpired">Your time expired</div>
+        <p class="expired" v-show="timeExpired">Your time expired!</p>
+        <br>
+
     </div>
 </template>
 
 <script>
+    import EventBus  from '../EventBus.js';
+
     import $ from 'jquery';
     import moment from 'moment';
 
@@ -15,6 +19,7 @@
         props: {
             numOfQuestions: Number,
             isTimeOn: Boolean,
+            quizStarted: Boolean
         },
 
         data() {
@@ -26,37 +31,37 @@
                 timeExpired: false,
             }
         },
-        watch: {
-
-        },
 
         computed: {
-
         },
 
         created() {
-            console.log('countdown created');
-            console.log(this.numOfQuestions);
-            // this.counter();
+            EventBus.$on('quizStarted', (numOfQuestions) => {
+                this.counter();
+            });
+        },
+
+        mounted() {
+            console.log('countdown mounted');
+        },
+
+        watch: {
         },
 
         methods: {
 
             counter() {
-                console.log('counter')
+                console.log('counter in countdown');
                 // this.seconds = Math.floor(this.multiplier * this.numOfQuestions);
                 // this.isTimeOn = true;
 
-                // if (this.isTimeOn === true ) {
                     this.seconds = 5;
                     let countDown = setInterval(() => {
                         // this.seconds = 5;
 
                         this.seconds--;
-                        console.log(this.seconds);
-
                         if (this.seconds <= 0) {
-                            console.log('ende');
+                            console.log('seconds == 0 ');
                             this.$emit('timeExpired');
                             this.timeExpired = true;
                             this.seconds = 0;
@@ -64,15 +69,11 @@
                         }
 
                         if (this.isTimeOn === false) {
-                            console.log('offffffffff')
+                            console.log('timeon is false ')
                             clearInterval(countDown)
-
                         }
 
                     }, 1000);
-                // }
-
-
             }
 
         }
